@@ -35,4 +35,19 @@ export const styles = StyleSheet.create({
   warningIcon: {
     marginRight: 5,
   },
+  headerStyle: {
+    backgroundColor: '#4E4376', // Purple background for the header
+  },
+  headerTintColor: {
+    color: '#fff', // White text color for the header
+  },
+  tabBarStyle: {
+    backgroundColor: '#4E4376', // Purple background for the tab bar
+  },
+  tabBarActiveTintColor: {
+    color: '#FFD700', // Gold color for active icons
+  },
+  tabBarInactiveTintColor: {
+    color: 'gray', // Gray color for inactive icons
+  },
 });
