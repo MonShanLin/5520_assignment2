@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: '#ceb9ed', // The purple background color as shown in your example
-    padding: 10, // Adjust as needed for padding around the content
+    backgroundColor: '#ceb9ed', // The purple background color of the app
+    padding: 10, // Padding around the content
   },
   itemContainer: {
-    backgroundColor: '#4E4376', // Background color similar to the image
+    backgroundColor: '#4E4376', // Background color
     padding: 15,
     margin: 10,
     borderRadius: 10,
