@@ -1,17 +1,23 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import ItemsList from '../Components/ItemsList';
+import { Ionicons } from '@expo/vector-icons';
+import { styles } from '../Helpers/styles'; 
 
-export default Diet = () => {
+export default function Diet({ navigation }) {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('AddDiet')}>
+          <Ionicons name="add" size={24} color="white" style={{ marginRight: 15 }} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+
   return (
-    <View style={{ flex: 1 }}>
-      <Text style={{ fontSize: 24, textAlign: 'center', marginVertical: 20 }}>
-        Diet
-      </Text>
+    <View style={styles.screenContainer}> 
       <ItemsList type="diet" />
     </View>
   );
 }
-
-
-
