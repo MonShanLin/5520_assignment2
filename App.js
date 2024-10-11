@@ -1,18 +1,30 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import Diet from './Screens/Diet';
+import { DataProvider } from './Context';
 
-const DataContext = createContext();
+const Tab = createBottomTabNavigator();
 
-export default function DataProvider({ children }) {
-  const [entries, setEntries] = useState({
-    diet: [],
-    activities: [],
-  });
-
+export default function App() {
   return (
-    <DataContext.Provider value={{ entries, setEntries }}>
-      {children}
-    </DataContext.Provider>
+    <DataProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let iconName;
+              if (route.name === 'Diet') {
+                iconName = 'fast-food';
+              } 
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+          })}
+        >
+          <Tab.Screen name="Diet" component={Diet} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </DataProvider>
   );
 }
-
-export const useDataContext = () => React.useContext(DataContext);
