@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5'; // Import FontAwesome5
 import Diet from './Screens/Diet';
 import Activities from './Screens/Activities';
 import { DataProvider } from './Context';
@@ -18,15 +19,15 @@ export default function App() {
               let iconName;
               if (route.name === 'Diet') {
                 iconName = 'fast-food';
+                return <Ionicons name={iconName} size={size} color={color} />;
               } else if (route.name === 'Activities') {
-                iconName = 'fitness';
-              }
-              return <Ionicons name={iconName} size={size} color={color} />;
+                return <FontAwesome5 name="running" size={size} color={color} />;              }
             },
           })}
         >
-          <Tab.Screen name="Diet" component={Diet} />
           <Tab.Screen name="Activities" component={Activities} />
+          <Tab.Screen name="Diet" component={Diet} />
+          
         </Tab.Navigator>
       </NavigationContainer>
     </DataProvider>
