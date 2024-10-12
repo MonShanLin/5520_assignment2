@@ -10,7 +10,7 @@ export default function SettingsScreen() {
   const { backgroundColor, textColor } = useThemeStyles(); 
 
   return (
-    <View style={[styles.screenContainer, { backgroundColor }]}>
+    <View style={[styles.screenContainer, { backgroundColor , justifyContent: 'center', alignItems: 'center' }]}>
       <Button title="Toggle Theme" onPress={toggleTheme} color={textColor} />
     </View>
   );
