@@ -9,12 +9,15 @@ export default function ItemsList({ type }) {
   const data = type === 'diet' ? entries.diet : entries.activities;
 
   const isSpecialActivity = (item) => {
-    // Check if the activity type is "Running" or "Weight" and the duration is greater than 60 minutes
-    const duration = parseInt(item.duration); // Convert duration to integer
-    return (
-      (item.name === 'Running' || item.name === 'Weights') && duration > 60
-    );
-  };
+    if (type === 'diet') {
+        // For diet, mark as special if calories exceed 800
+        return parseInt(item.calories) > 800; // Convert calories to integer
+      } else {
+        // For activities, mark as special if it's "Running" or "Weights" and duration > 60 minutes
+        const duration = parseInt(item.duration); // Convert duration to integer
+        return (item.name === 'Running' || item.name === 'Weights') && duration > 60;
+      }
+    };
 
   return (
     <FlatList
