@@ -18,7 +18,7 @@ export default function Form({
   return (
     <View style={styles.screenContainer}>
       {formFields.map((field, index) => (
-        <View key={index}>
+        <View key={index} style={{ zIndex: field.open ? 500 : 1, marginBottom: 20 }}>
           <Text style={styles.label}>{field.label} *</Text>
           {field.dropdownOptions ? (
             <DropDownPicker
@@ -30,6 +30,9 @@ export default function Form({
               setItems={field.setItems}
               placeholder={field.placeholder}
               containerStyle={styles.dropdown}
+              style={{ backgroundColor: 'white' }}
+              dropDownContainerStyle={{ backgroundColor: 'white' }}
+              zIndex={1000}
             />
           ) : (
           <TextInput
@@ -49,11 +52,13 @@ export default function Form({
         onPress={() => setShowDatePicker(true)}
         style={styles.dateContainer}
       >
+        <View pointerEvents="none">
         <TextInput
           style={styles.input}
           value={date.toDateString()}
           editable={false}
         />
+        </View>
       </TouchableOpacity>
 
       {showDatePicker && (

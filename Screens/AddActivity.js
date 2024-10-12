@@ -64,7 +64,10 @@ export default function AddActivity({ navigation }) {
       setItems,
       placeholder: 'Select An Activity',
     },
-    { label: 'Duration (min)', value: duration, onChange: setDuration, placeholder: 'Enter duration in minutes', keyboardType: 'numeric' },
+    { label: 'Duration (min)', 
+      value: duration, 
+      onChange: setDuration, 
+      keyboardType: 'numeric' },
   ];
 
   return (

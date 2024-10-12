@@ -83,10 +83,15 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 20,
+    borderColor: '#4E4376', 
+    borderWidth: 1, 
+    zIndex: 0,
   },
+
   dropdown: {
     marginBottom: 20,
   },
+
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
