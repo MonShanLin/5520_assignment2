@@ -29,16 +29,14 @@ export default function Form({
     const onChangeDate = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setDate(currentDate);
-        setIsDatePicked(true); 
-      
-        if (Platform.OS !== 'ios' || isDatePicked) {
-          setShowDatePicker(false); 
-        } else if (Platform.OS === 'ios') {
-          setTimeout(() => setShowDatePicker(false), 250); // Delay to ensure the UI update after date selection
+        // On iOS, keep the picker open while selecting inline, but close it after selection
+        if (Platform.OS !== 'ios') {
+          setShowDatePicker(false); // On Android, close immediately after selection
+        } else {
+          setTimeout(() => setShowDatePicker(false), 250); // iOS delay to update UI after inline selection
         }
-      
-        setIsDatePicked(false); 
       };
+
   return (
     <View style={[styles.screenContainer, { backgroundColor }]}>
       {formFields.map((field, index) => (
@@ -91,15 +89,12 @@ export default function Form({
       </TouchableOpacity>
 
       {showDatePicker && (
-        <View style={{ width: '100%', maxHeight: 300, backgroundColor: 'white', borderRadius: 10, overflow: 'hidden' }}>
-            <DateTimePicker
-            value={date}
-            mode="date"
-            display={Platform.OS === 'ios' ? 'inline'  : 'default'}
-            onChange={onChangeDate}
-            style={{ width: '100%' }}
-            />
-        </View>
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display={Platform.OS === 'ios' ? 'inline' : 'default'}
+          onChange={onChangeDate}
+        />
       )}
 
       <View style={styles.buttonContainer}>
@@ -109,3 +104,4 @@ export default function Form({
     </View>
   );
 }
+
