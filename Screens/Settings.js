@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, Button, Text } from 'react-native';
-import { ThemeContext } from '../Components/ThemeContext';
+import { useTheme } from '../Components/ThemeContext';
 import { styles } from '../Helpers/styles';
 
 export default function SettingsScreen() {
-  const { toggleTheme } = useContext(ThemeContext); // Access the toggleTheme function from context
+  const { toggleTheme } = useTheme();// Access the toggleTheme function from the custom hook
 
   return (
     <View style={styles.screenContainer}>

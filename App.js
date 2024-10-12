@@ -55,8 +55,9 @@ function DietStack() {
 
 export default function App() {
   return (
-    <ThemeProvider>
+    
       <DataProvider>
+        <ThemeProvider>
         <NavigationContainer>
           <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -87,7 +88,8 @@ export default function App() {
             <Tab.Screen name="Settings" component={SettingsScreen} />
           </Tab.Navigator>
         </NavigationContainer>
+        </ThemeProvider>
       </DataProvider>
-    </ThemeProvider>
+    
   );
 }
