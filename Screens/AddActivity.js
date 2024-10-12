@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDataContext } from '../Context'; // Use context to update data
@@ -75,21 +75,28 @@ export default function AddActivity({ navigation }) {
       />
 
       <Text style={styles.label}>Date *</Text>
-      <TextInput
-        style={styles.input}
-        value={date.toDateString()}
-        onFocus={() => setShowDatePicker(true)}
-      />
+      <TouchableOpacity 
+        onPress={() => setShowDatePicker(true)}
+        style={styles.dateContainer}
+        >
+        <TextInput
+          style={styles.input}
+          value={date.toDateString()}
+          editable={false}
+          pointerEvents="none" // Disable interaction with the TextInput itself
+        />
+      </TouchableOpacity>
+
       {showDatePicker && (
         <DateTimePicker
           value={date}
           mode="date"
-          display="default"
+          display="inline" // Use inline display for the calendar view
           onChange={(event, selectedDate) => {
-            setShowDatePicker(false);
             if (selectedDate) {
               setDate(selectedDate);
             }
+            setShowDatePicker(false); // Hide picker after selection
           }}
         />
       )}

@@ -73,6 +73,11 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
+
+  dateContainer: {
+    borderRadius: 5,
+  },
+
   input: {
     backgroundColor: 'white',
     padding: 10,
