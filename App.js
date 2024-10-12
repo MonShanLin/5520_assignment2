@@ -4,9 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import Diet from './Screens/Diet';
+import DietScreen from './Screens/Diet';
 import ActivitiesScreen from './Screens/Activities';
 import AddActivity from './Screens/AddActivity';
+import AddDiet from './Screens/AddDiet';
 import { DataProvider } from './Context';
 import { styles } from './Helpers/styles';
 
@@ -26,6 +27,24 @@ function ActivitiesStack() {
         name="AddActivity"
         component={AddActivity}
         options={{ title: 'Add An Activity' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// Stack Navigator for the Diet Tab
+function DietStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="DietScreen"
+        component={DietScreen}
+        options={{ title: 'Diet' }}
+      />
+      <Stack.Screen
+        name="AddDiet"
+        component={AddDiet}
+        options={{ title: 'Add A Diet Entry' }}
       />
     </Stack.Navigator>
   );
@@ -58,7 +77,7 @@ export default function App() {
           })}
         >
           <Tab.Screen name="Activities" component={ActivitiesStack} />
-          <Tab.Screen name="Diet" component={Diet} />
+          <Tab.Screen name="Diet" component={DietStack} />
         </Tab.Navigator>
       </NavigationContainer>
     </DataProvider>
