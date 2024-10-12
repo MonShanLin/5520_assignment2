@@ -5,7 +5,7 @@ import { styles } from '../Helpers/styles';
 import { useThemeStyles } from '../Components/useThemeStyles';
 
 export default function SettingsScreen() {
-  const { theme, toggleTheme } = useTheme(); // Access the toggleTheme function from the custom hook
+  const { theme, toggleTheme } = useTheme();
   const { backgroundColor, textColor } = useThemeStyles();
 
   return (
