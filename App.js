@@ -8,6 +8,7 @@ import DietScreen from './Screens/Diet';
 import ActivitiesScreen from './Screens/Activities';
 import AddActivity from './Screens/AddActivity';
 import AddDiet from './Screens/AddDiet';
+import { ThemeProvider } from './Components/ThemeContext';
 import { DataProvider } from './Context';
 import { styles } from './Helpers/styles';
 
@@ -52,6 +53,7 @@ function DietStack() {
 
 export default function App() {
   return (
+    <ThemeProvider>
     <DataProvider>
       <NavigationContainer>
         <Tab.Navigator
@@ -81,5 +83,6 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
     </DataProvider>
+    </ThemeProvider>
   );
 }
