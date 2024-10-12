@@ -1,18 +1,31 @@
 import { Alert } from 'react-native';
 
 export function validateAndSave(formData, date, setEntries, entriesType, navigation) {
-  // Validation
-  if (!formData || Object.values(formData).some((value) => !value) || !date) {
-    Alert.alert('Invalid input', 'Please complete all the fields.');
-    return false;
-  }
+    // Validation for empty fields
+    if (!formData || Object.values(formData).some((value) => value === '' || value === null) || !date) {
+      Alert.alert('Invalid input', 'Please complete all the fields.');
+      return false;
+    }
   
-  // Handle numeric fields
-  const numericField = Object.values(formData).find(value => isNaN(value));
-  if (numericField && numericField <= 0) {
-    Alert.alert('Invalid input', 'Numeric fields must be positive numbers.');
-    return false;
+  // Validation for numeric fields
+  if ('duration' in formData) {
+    const duration = parseInt(formData.duration, 10);
+    if (isNaN(duration) || duration <= 0) {
+      Alert.alert('Invalid input', 'Duration must be a positive number.');
+      return false;
+    }
+    formData.duration = duration; // Ensure duration is stored as a number
   }
+
+  if ('calories' in formData) {
+    const calories = parseInt(formData.calories, 10);
+    if (isNaN(calories) || calories <= 0) {
+      Alert.alert('Invalid input', 'Calories must be a positive number.');
+      return false;
+    }
+    formData.calories = calories; // Ensure calories are stored as a number
+  }
+
 
   // Save data
   setEntries((prevEntries) => ({
