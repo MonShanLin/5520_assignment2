@@ -7,27 +7,24 @@ export function validateAndSave(formData, date, setEntries, entriesType, navigat
       return false;
     }
   
-    // Regular expression to check if the input is a valid positive integer
-    const isPositiveInteger = (value) => /^\d+$/.test(value);
-
-    // Validation for duration field
+    // Validation for numeric fields
     if ('duration' in formData) {
-        if (!isPositiveInteger(formData.duration)) {
-            Alert.alert('Invalid input', 'Duration must be a valid positive number.');
-            return false;
+        const duration = parseInt(formData.duration, 10);
+        if (isNaN(duration) || duration <= 0) {
+        Alert.alert('Invalid input', 'Duration must be a positive number.');
+        return false;
         }
-        formData.duration = parseInt(formData.duration, 10); 
+        formData.duration = duration; // Ensure duration is stored as a number
     }
 
-    // Validation for calories field
     if ('calories' in formData) {
-        if (!isPositiveInteger(formData.calories)) {
-            Alert.alert('Invalid input', 'Calories must be a valid positive number.');
-            return false;
+        const calories = parseInt(formData.calories, 10);
+        if (isNaN(calories) || calories <= 0) {
+        Alert.alert('Invalid input', 'Calories must be a positive number.');
+        return false;
         }
-        formData.calories = parseInt(formData.calories, 10); 
+        formData.calories = calories; // Ensure calories are stored as a number
     }
-
 
   setEntries((prevEntries) => ({
     ...prevEntries,
