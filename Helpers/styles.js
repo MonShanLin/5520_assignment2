@@ -72,7 +72,6 @@ export const styles = StyleSheet.create({
   label: {
     color: 'purple',
     fontSize: 16,
-    marginBottom: 10,
   },
 
   dateContainer: {
@@ -84,7 +83,6 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
-    marginBottom: 20,
     borderColor: 'black', 
     borderWidth: 1.5, 
     zIndex: 0,
@@ -93,14 +91,13 @@ export const styles = StyleSheet.create({
   dropdown: {
     height: 50,
     borderRadius: 5,
-    marginBottom: 20,
     zIndex: 0,
   },
 
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: 10,
   },
 
   button: {
