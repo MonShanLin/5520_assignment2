@@ -3,8 +3,10 @@ import { Alert } from 'react-native';
 import { useDataContext } from '../Context'; // Use context to update data
 import Form from '../Components/Form'; // Reusable form component
 import { validateAndSave } from '../Components/validationAndSave'; // Import the reusable validation function
+import { useTheme } from '../Components/ThemeContext';
 
 export default function AddActivity({ navigation }) {
+  const { theme } = useTheme();
   const { entries, setEntries } = useDataContext(); // Context to update the activities
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState('');
