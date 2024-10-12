@@ -46,14 +46,12 @@ export default function AddDiet({ navigation }) {
       label: 'Description',
       value: description,
       onChange: setDescription,
-      placeholder: 'Enter description',
     },
     {
       label: 'Calories',
       value: calories,
       onChange: setCalories,
       keyboardType: 'numeric',
-      placeholder: 'Enter calories',
     },
   ];
 
