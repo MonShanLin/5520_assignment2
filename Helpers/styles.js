@@ -55,6 +55,7 @@ export const styles = StyleSheet.create({
   // Header styles
   headerStyle: {
     backgroundColor: '#4E4376', // Purple background
+   
   },
   headerTintColor: {
     color: 'white', // White text color for the header

@@ -20,7 +20,14 @@ const Stack = createStackNavigator();
 // Stack Navigator for the Activities Tab
 function ActivitiesStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      headerTitleAlign: 'center', 
+      headerStyle: styles.headerStyle, 
+      headerTintColor: styles.headerTintColor.color, 
+    }}
+    >
+
       <Stack.Screen
         name="ActivitiesScreen"
         component={ActivitiesScreen}
@@ -38,7 +45,13 @@ function ActivitiesStack() {
 // Stack Navigator for the Diet Tab
 function DietStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      headerTitleAlign: 'center', 
+      headerStyle: styles.headerStyle, 
+      headerTintColor: styles.headerTintColor.color, 
+    }}
+    >
       <Stack.Screen
         name="DietScreen"
         component={DietScreen}
@@ -56,7 +69,13 @@ function DietStack() {
 // Stack Navigator for the Settings Tab
 function SettingsStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      headerTitleAlign: 'center', 
+      headerStyle: styles.headerStyle, 
+      headerTintColor: styles.headerTintColor.color, 
+    }}
+    >
       <Stack.Screen
         name="SettingsScreen"
         component={SettingsScreen}
