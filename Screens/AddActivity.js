@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDataContext } from '../Context'; // Use context to update data
-import { styles } from '../Helpers/styles'; 
 
 export default function AddActivity({ navigation }) {
   const { entries, setEntries } = useDataContext(); // Context to update the activities
@@ -51,6 +48,20 @@ export default function AddActivity({ navigation }) {
     // Go back to the previous screen
     navigation.goBack();
   };
+
+  const formFields = [
+    {
+      label: 'Activity',
+      value: activityType,
+      onChange: setActivityType,
+      dropdownOptions: items,
+      setOpen,
+      open,
+      setItems,
+      placeholder: 'Select An Activity',
+    },
+    { label: 'Duration (min)', value: duration, onChange: setDuration, placeholder: 'Enter duration in minutes', keyboardType: 'numeric' },
+  ];
 
   return (
     <View style={styles.screenContainer}>
