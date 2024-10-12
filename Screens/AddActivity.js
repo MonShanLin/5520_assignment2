@@ -3,10 +3,11 @@ import { Alert } from 'react-native';
 import { useDataContext } from '../Context'; // Use context to update data
 import Form from '../Components/Form'; // Reusable form component
 import { validateAndSave } from '../Components/validationAndSave'; // Import the reusable validation function
-import { useTheme } from '../Components/ThemeContext';
+import { useThemeStyles } from '../Components/useThemeStyles'; // Custom hook to get styles
 
 export default function AddActivity({ navigation }) {
-  const { theme } = useTheme();
+  const { backgroundColor, textColor } = useThemeStyles();
+
   const { entries, setEntries } = useDataContext(); // Context to update the activities
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState('');
@@ -59,6 +60,8 @@ export default function AddActivity({ navigation }) {
       setShowDatePicker={setShowDatePicker}
       handleSave={handleSave}
       handleCancel={() => navigation.goBack()}
+      backgroundColor={backgroundColor}  // Pass backgroundColor to Form
+      textColor={textColor}  // Pass textColor to Form
     />
   );
 }
