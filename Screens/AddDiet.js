@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { useDataContext } from '../Context';
 import Form from '../Components/Form';
+import { validateAndSave } from '../Components/validationAndSave';
 
 export default function AddDiet({ navigation }) {
   const { entries, setEntries } = useDataContext();
@@ -9,36 +10,6 @@ export default function AddDiet({ navigation }) {
   const [calories, setCalories] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-
-  const handleSave = () => {
-    if (!description || !calories || !date) {
-      Alert.alert('Invalid input', 'Please complete all the fields.');
-      return;
-    }
-    if (isNaN(calories) || calories <= 0) {
-      Alert.alert('Invalid input', 'Calories must be a positive number.');
-      return;
-    }
-
-    setEntries((prevEntries) => ({
-      ...prevEntries,
-      diet: [
-        ...prevEntries.diet,
-        {
-          id: prevEntries.diet.length + 1,
-          name: description,
-          calories: `${calories}`,
-          date: date.toDateString(),
-        },
-      ],
-    }));
-
-    navigation.goBack();
-  };
-
-  const handleCancel = () => {
-    navigation.goBack();
-  };
 
   const formFields = [
     {
@@ -54,6 +25,15 @@ export default function AddDiet({ navigation }) {
     },
   ];
 
+  const handleSave = () => {
+    const formData = {
+      name: description,
+      calories: `${calories}`,
+    };
+
+    validateAndSave(formData, date, setEntries, 'diet', navigation);
+  };
+
   return (
     <Form
       formFields={formFields}
@@ -62,7 +42,7 @@ export default function AddDiet({ navigation }) {
       showDatePicker={showDatePicker}
       setShowDatePicker={setShowDatePicker}
       handleSave={handleSave}
-      handleCancel={handleCancel}
+      handleCancel={() => navigation.goBack()}
     />
   );
 }
