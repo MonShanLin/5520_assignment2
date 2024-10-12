@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { styles } from '../Helpers/styles';
 
 export default function Form({
@@ -19,6 +20,18 @@ export default function Form({
       {formFields.map((field, index) => (
         <View key={index}>
           <Text style={styles.label}>{field.label} *</Text>
+          {field.dropdownOptions ? (
+            <DropDownPicker
+              open={field.open}
+              value={field.value}
+              items={field.dropdownOptions}
+              setOpen={field.setOpen}
+              setValue={field.onChange}
+              setItems={field.setItems}
+              placeholder={field.placeholder}
+              containerStyle={styles.dropdown}
+            />
+          ) : (
           <TextInput
             style={styles.input}
             keyboardType={field.keyboardType || 'default'}
@@ -26,6 +39,7 @@ export default function Form({
             onChangeText={field.onChange}
             placeholder={field.placeholder || ''}
           />
+            )}
         </View>
       ))}
 
