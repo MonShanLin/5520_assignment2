@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Button } from 'react-native';
 import ItemsList from '../Components/ItemsList';
 import { styles } from '../Helpers/styles';
 
-export default function ListScreen({ type, addScreenName, navigation }) {
+export default function ListScreen({ type, addScreenName, navigation, backgroundColor,textColor, }) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -19,8 +19,8 @@ export default function ListScreen({ type, addScreenName, navigation }) {
   }, [navigation]);
 
   return (
-    <View style={styles.screenContainer}>
-      <ItemsList type={type} />
+    <View style={[styles.screenContainer, { backgroundColor }]}>
+      <ItemsList type={type} textColor={textColor} /> 
     </View>
   );
 }
