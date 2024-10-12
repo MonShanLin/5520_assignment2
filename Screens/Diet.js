@@ -1,26 +1,12 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Button } from 'react-native';
-import ItemsList from '../Components/ItemsList';
-import { styles } from '../Helpers/styles'; 
+import ListScreen from '../Components/ListScreen';
 
 export default function DietScreen({ navigation }) {
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity style={{ marginRight: 15 }}>
-          <Button
-            onPress={() => navigation.navigate('AddDiet')} // Navigate to AddDiet screen
-            title="Add" // Text for the button
-            color="black" // Button text color
-          />
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
-
   return (
-    <View style={styles.screenContainer}> 
-      <ItemsList type="diet" />
-    </View>
+    <ListScreen
+      type="diet" // Pass the type as "diet"
+      addScreenName="AddDiet" // Pass the screen name for the "Add" button
+      navigation={navigation} // Pass the navigation prop
+    />
   );
 }
