@@ -14,16 +14,25 @@ export default function ItemsList({ type }) {
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <View style={styles.itemContainer}>
-                    <Text style={styles.itemName}>{item.name}</Text>
+            <Text style={styles.itemName}>{item.name}</Text>
+
           <View style={styles.itemDetailsContainer}>
-            {new Date(item.date) < new Date() && (
-              <Ionicons name="warning" size={20} color="#FFC107" style={styles.warningIcon} />
-            )}
-            <Text style={styles.itemDate}>{item.date}</Text>
-            <Text style={styles.itemDetails}>
+          <View style={styles.itemInfo}>
+              {new Date(item.date) < new Date() && (
+                <Ionicons name="warning" size={20} color="#FFC107" style={styles.warningIcon} />
+              )}
+              
+              <View style={styles.box}>
+                <Text style={styles.itemDetails}>{item.date}</Text>
+              </View>
+            </View>
+            
+            <View style={styles.box}>
+              <Text style={styles.itemDetails}>
                 {type === 'diet' ? `${item.calories} cal` : item.duration}
-            </Text>
-         </View>
+              </Text>
+            </View>
+          </View>
         </View>
       )}
     />

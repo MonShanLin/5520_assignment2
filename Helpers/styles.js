@@ -11,31 +11,45 @@ export const styles = StyleSheet.create({
   itemContainer: {
     backgroundColor: '#4E4376', // Background color
     padding: 15,
-    margin: 10,
+    marginVertical: 8,
     borderRadius: 10,
-    flexDirection: 'column', // Ensures content is stacked
-  },
-  itemName: {
-    fontSize: 18,
-    color: 'white',
-    marginBottom: 5, // Adds some space between name and details
-  },
-  itemDetailsContainer: {
-    flexDirection: 'row', // Aligns date and details horizontally
-    alignItems: 'center', // Centers items vertically
+    flexDirection: 'row', // Aligns items horizontally
     justifyContent: 'space-between', // Distributes space between elements
+    alignItems: 'center', // Aligns items vertically
   },
-  itemDate: {
-    fontSize: 14,
-    color: '#FFD700', // Golden color for the date
-    marginRight: 10,
-  },
-  itemDetails: {
+
+  itemName: {
     fontSize: 16,
     color: 'white',
+    flex: 1, // Takes as much space as it can
   },
+
+  itemDetailsContainer: {
+    flexDirection: 'row', // Aligns date and details horizontally
+    alignItems: 'center', // Aligns items at the bottom
+  },
+
+  itemInfo: {
+    flexDirection: 'row', // Align warning icon and date horizontally
+    alignItems: 'center',
+    marginRight: 10,
+  },
+
+  itemDetails: {
+    fontSize: 14,
+    color: 'black',
+  },
+
   warningIcon: {
     marginRight: 5,
+  },
+
+  box: {
+    backgroundColor: 'white',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    marginRight: 10,
   },
 
   // Header styles
@@ -54,9 +68,8 @@ export const styles = StyleSheet.create({
     color: 'gray', // Gray color for inactive icons
   },
 
-
   label: {
-    color: 'white',
+    color: 'purple',
     fontSize: 16,
     marginBottom: 10,
   },

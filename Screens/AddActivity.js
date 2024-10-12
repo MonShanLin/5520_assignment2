@@ -12,7 +12,6 @@ export default function AddActivity({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  // Dropdown state
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
     { label: 'Walking', value: 'Walking' },
@@ -27,7 +26,7 @@ export default function AddActivity({ navigation }) {
   // Handle saving the activity
   const handleSave = () => {
     if (!activityType || !duration || !date) {
-      Alert.alert('Invalid input', 'Please fill in all the fields.');
+      Alert.alert('Invalid input', 'Please complete all the fields.');
       return;
     }
     if (isNaN(duration) || duration <= 0) {
@@ -55,7 +54,6 @@ export default function AddActivity({ navigation }) {
 
   return (
     <View style={styles.screenContainer}>
-      {/* Dropdown for activity type */}
       <Text style={styles.label}>Activity *</Text>
       <DropDownPicker
         open={open}
@@ -68,17 +66,14 @@ export default function AddActivity({ navigation }) {
         containerStyle={styles.dropdown}
       />
 
-      {/* Duration Input */}
       <Text style={styles.label}>Duration (min) *</Text>
       <TextInput
         style={styles.input}
         keyboardType="numeric"
         value={duration}
-        onChangeText={setDuration}
-        placeholder="Enter duration in minutes"
+        onChangeText={(text) => setDuration(text)}
       />
 
-      {/* Date Picker */}
       <Text style={styles.label}>Date *</Text>
       <TextInput
         style={styles.input}
@@ -99,10 +94,9 @@ export default function AddActivity({ navigation }) {
         />
       )}
 
-      {/* Buttons */}
       <View style={styles.buttonContainer}>
-        <Button title="Cancel" onPress={() => navigation.goBack()} color="gray" />
-        <Button title="Save" onPress={handleSave} color="#4E4376" />
+        <Button title="Cancel" onPress={() => navigation.goBack()} color="blue" />
+        <Button title="Save" onPress={handleSave} color="blue" />
       </View>
     </View>
   );
