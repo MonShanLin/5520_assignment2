@@ -29,11 +29,10 @@ export default function Form({
     const onChangeDate = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setDate(currentDate);
-        // On iOS, keep the picker open while selecting inline, but close it after selection
         if (Platform.OS !== 'ios') {
-          setShowDatePicker(false); // On Android, close immediately after selection
+          setShowDatePicker(false);
         } else {
-          setTimeout(() => setShowDatePicker(false), 250); // iOS delay to update UI after inline selection
+          setTimeout(() => setShowDatePicker(false), 250);
         }
       };
 
@@ -58,7 +57,10 @@ export default function Form({
               placeholder={field.placeholder}
               containerStyle={[styles.dropdown]}
               style={{ backgroundColor: 'white' }}
-              dropDownContainerStyle={{ backgroundColor: 'white' }}
+              dropDownContainerStyle={{
+                backgroundColor: 'white',
+                maxHeight: 300,
+              }}
               zIndex={1000}
             />
           ) : (
@@ -104,4 +106,3 @@ export default function Form({
     </View>
   );
 }
-
