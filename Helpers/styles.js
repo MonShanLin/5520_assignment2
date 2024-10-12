@@ -97,4 +97,15 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 20,
   },
+
+  button: {
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
