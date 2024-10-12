@@ -12,14 +12,16 @@ export default function Form({
   setShowDatePicker,
   handleSave,
   handleCancel,
+  backgroundColor, // Pass theme background color
+  textColor, // Pass theme text color
   saveText = "Save",
   cancelText = "Cancel"
 }) {
   return (
-    <View style={styles.screenContainer}>
+    <View style={[styles.screenContainer, { backgroundColor }]}> 
       {formFields.map((field, index) => (
         <View key={index} style={{ zIndex: field.open ? 500 : 1, marginBottom: 20 }}>
-          <Text style={styles.label}>{field.label} *</Text>
+        <Text style={[styles.label, { color: textColor }]}>{field.label} *</Text>
           {field.dropdownOptions ? (
             <DropDownPicker
               open={field.open}
@@ -47,7 +49,7 @@ export default function Form({
       ))}
 
       {/* Date Input */}
-      <Text style={styles.label}>Date *</Text>
+      <Text style={[styles.label, { color: textColor }]}>Date *</Text>
       <TouchableOpacity 
         onPress={() => setShowDatePicker(true)}
         style={styles.dateContainer}
