@@ -1,48 +1,60 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
-export function useFormHandler(initialFields, onSave) {
-  const [fields, setFields] = useState(initialFields);
+export default function useFormHandler(initialFormData, entriesType, setEntries, navigation) {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const handleChange = (key, value) => {
-    setFields((prevFields) => ({
-      ...prevFields,
-      [key]: value,
-    }));
+  const [formData, setFormData] = useState(initialFormData);
+
+  const handleFieldChange = (field, value) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
   };
 
   const handleSave = () => {
-    for (let key in fields) {
-      if (!fields[key]) {
-        Alert.alert('Invalid input', 'Please complete all the fields.');
-        return;
-      }
+    // Validation
+    if (!formData.name || !formData.value || !date) {
+      Alert.alert('Invalid input', 'Please complete all the fields.');
+      return;
     }
-
-    // Validate the calories or duration field depending on the form type
-    if ((fields.calories && isNaN(fields.calories)) || fields.calories <= 0) {
-      Alert.alert('Invalid input', 'Calories must be a positive number.');
+    if (isNaN(formData.value) || formData.value <= 0) {
+      Alert.alert('Invalid input', 'The numeric field must be a positive number.');
       return;
     }
 
-    if ((fields.duration && isNaN(fields.duration)) || fields.duration <= 0) {
-      Alert.alert('Invalid input', 'Duration must be a positive number.');
-      return;
-    }
+    // Update entries
+    setEntries((prevEntries) => ({
+      ...prevEntries,
+      [entriesType]: [
+        ...prevEntries[entriesType],
+        {
+          id: prevEntries[entriesType].length + 1,
+          name: formData.name,
+          value: `${formData.value}`,
+          date: date.toDateString(),
+        },
+      ],
+    }));
 
-    // Call the passed in save function
-    onSave(fields, date);
+    navigation.goBack();
+  };
+
+  const handleCancel = () => {
+    navigation.goBack();
   };
 
   return {
-    fields,
+    formData,
+    setFormData,
+    handleFieldChange,
     date,
     setDate,
     showDatePicker,
     setShowDatePicker,
-    handleChange,
     handleSave,
+    handleCancel,
   };
 }
