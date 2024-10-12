@@ -53,6 +53,19 @@ function DietStack() {
   );
 }
 
+// Stack Navigator for the Settings Tab
+function SettingsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        options={{ title: 'Settings' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     
@@ -85,7 +98,7 @@ export default function App() {
           >
             <Tab.Screen name="Activities" component={ActivitiesStack} />
             <Tab.Screen name="Diet" component={DietStack} />
-            <Tab.Screen name="Settings" component={SettingsScreen} />
+            <Tab.Screen name="Settings" component={SettingsStack} />
           </Tab.Navigator>
         </NavigationContainer>
         </ThemeProvider>

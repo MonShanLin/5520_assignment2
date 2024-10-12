@@ -8,7 +8,6 @@ export default function SettingsScreen() {
 
   return (
     <View style={styles.screenContainer}>
-      <Text style={styles.label}>Settings</Text>
       <Button title="Toggle Theme" onPress={toggleTheme} />
     </View>
   );
