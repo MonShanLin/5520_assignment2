@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { useDataContext } from '../Context'; // Use context to update data
+import Form from '../Components/Form'; // Reusable form component
 
 export default function AddActivity({ navigation }) {
   const { entries, setEntries } = useDataContext(); // Context to update the activities
@@ -64,58 +65,14 @@ export default function AddActivity({ navigation }) {
   ];
 
   return (
-    <View style={styles.screenContainer}>
-      <Text style={styles.label}>Activity *</Text>
-      <DropDownPicker
-        open={open}
-        value={activityType}
-        items={items}
-        setOpen={setOpen}
-        setValue={setActivityType}
-        setItems={setItems}
-        placeholder="Select An Activity"
-        containerStyle={styles.dropdown}
-      />
-
-      <Text style={styles.label}>Duration (min) *</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="numeric"
-        value={duration}
-        onChangeText={(text) => setDuration(text)}
-      />
-
-      <Text style={styles.label}>Date *</Text>
-      <TouchableOpacity 
-        onPress={() => setShowDatePicker(true)}
-        style={styles.dateContainer}
-        >
-        <TextInput
-          style={styles.input}
-          value={date.toDateString()}
-          editable={false}
-          pointerEvents="none" // Disable interaction with the TextInput itself
-        />
-      </TouchableOpacity>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="inline" // Use inline display for the calendar view
-          onChange={(event, selectedDate) => {
-            if (selectedDate) {
-              setDate(selectedDate);
-            }
-            setShowDatePicker(false); // Hide picker after selection
-          }}
-        />
-      )}
-
-      <View style={styles.buttonContainer}>
-        <Button title="Cancel" onPress={() => navigation.goBack()} color="blue" />
-        <Button title="Save" onPress={handleSave} color="blue" />
-      </View>
-    </View>
+    <Form
+      formFields={formFields}
+      date={date}
+      setDate={setDate}
+      showDatePicker={showDatePicker}
+      setShowDatePicker={setShowDatePicker}
+      handleSave={handleSave}
+      handleCancel={handleCancel}
+    />
   );
 }
