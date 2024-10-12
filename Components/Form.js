@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Date from './Date';
 import { styles } from '../Helpers/styles';
 
 export default function Form({
@@ -24,18 +25,7 @@ export default function Form({
   saveText = 'Save',
   cancelText = 'Cancel',
 }) {
-    const [isDatePicked, setIsDatePicked] = useState(false);
-
-    const onChangeDate = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setDate(currentDate);
-        if (Platform.OS !== 'ios') {
-          setShowDatePicker(false);
-        } else {
-          setTimeout(() => setShowDatePicker(false), 250);
-        }
-      };
-
+  
   return (
     <View style={[styles.screenContainer, { backgroundColor }]}>
       {formFields.map((field, index) => (
@@ -75,29 +65,9 @@ export default function Form({
         </View>
       ))}
 
-      {/* Date Input */}
+      {/* Date*/}
       <Text style={[styles.label, { color: textColor }]}>Date *</Text>
-      <TouchableOpacity
-        onPress={() => setShowDatePicker(true)}
-        style={styles.dateContainer}
-      >
-        <View pointerEvents="none">
-          <TextInput
-            style={styles.input}
-            value={date.toDateString()}
-            editable={false}
-          />
-        </View>
-      </TouchableOpacity>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display={Platform.OS === 'ios' ? 'inline' : 'default'}
-          onChange={onChangeDate}
-        />
-      )}
+      <Date value={date} onChange={setDate} />
 
       <View style={styles.buttonContainer}>
         <Button title={cancelText} onPress={handleCancel} color="blue" />
