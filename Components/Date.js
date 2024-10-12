@@ -22,7 +22,7 @@ export default function Date({ value, onChange }) {
   return (
     <View>
       <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding: 10, backgroundColor: 'white' }}
+        style={{ height: 40, borderColor: 'black', borderWidth: 1, padding: 10, backgroundColor: 'white' }}
         placeholder="Select Date"
         value={value ? value.toLocaleDateString() : ''}
         onFocus={showDatepicker} // Show date picker when the input is focused
