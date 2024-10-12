@@ -74,12 +74,17 @@ export default function App() {
                 return (
                   <FontAwesome5 name="running" size={size} color={color} />
                 );
-              }
+              } else if (route.name === 'Settings') {
+                iconName = 'ios-settings';
+                return <Ionicons name={iconName} size={size} color={color} />;
+              }  
+              
             },
           })}
         >
           <Tab.Screen name="Activities" component={ActivitiesStack} />
           <Tab.Screen name="Diet" component={DietStack} />
+          <Tab.Screen name="Settings" component={SettingsScreen} /> 
         </Tab.Navigator>
       </NavigationContainer>
     </DataProvider>
