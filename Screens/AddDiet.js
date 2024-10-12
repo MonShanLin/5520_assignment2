@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
-import { useDataContext } from '../Context'; 
+import { useDataContext } from '../Context';
 import Form from '../Components/Form';
 
 export default function AddDiet({ navigation }) {
@@ -20,7 +20,6 @@ export default function AddDiet({ navigation }) {
       return;
     }
 
-    // Add the new diet entry
     setEntries((prevEntries) => ({
       ...prevEntries,
       diet: [
@@ -28,7 +27,7 @@ export default function AddDiet({ navigation }) {
         {
           id: prevEntries.diet.length + 1,
           name: description,
-          calories: `${calories} cal`,
+          calories: `${calories}`,
           date: date.toDateString(),
         },
       ],
