@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { useDataContext } from '../Context'; // Use context to update data
 import Form from '../Components/Form'; // Reusable form component
+import { validateAndSave } from '../Components/validationAndSave'; // Import the reusable validation function
 
 export default function AddActivity({ navigation }) {
   const { entries, setEntries } = useDataContext(); // Context to update the activities
@@ -21,38 +22,6 @@ export default function AddActivity({ navigation }) {
     { label: 'Hiking', value: 'Hiking' },
   ]);
 
-  // Handle saving the activity
-  const handleSave = () => {
-    if (!activityType || !duration || !date) {
-      Alert.alert('Invalid input', 'Please complete all the fields.');
-      return;
-    }
-    if (isNaN(duration) || duration <= 0) {
-      Alert.alert('Invalid input', 'Duration must be a positive number.');
-      return;
-    }
-
-    // Update the activities in the context
-    setEntries((prevEntries) => ({
-      ...prevEntries,
-      activities: [
-        ...prevEntries.activities,
-        {
-          id: prevEntries.activities.length + 1, // Incremental ID
-          name: activityType,
-          duration: `${duration} min`,
-          date: date.toDateString(),
-        },
-      ],
-    }));
-
-    navigation.goBack();
-  };
-
-  const handleCancel = () => {
-    navigation.goBack();
-  };
-
   const formFields = [
     {
       label: 'Activity',
@@ -70,6 +39,15 @@ export default function AddActivity({ navigation }) {
       keyboardType: 'numeric' },
   ];
 
+  const handleSave = () => {
+    const formData = {
+      name: activityType,
+      duration: `${duration} min`,
+    };
+
+    validateAndSave(formData, date, setEntries, 'activities', navigation);
+  };
+
   return (
     <Form
       formFields={formFields}
@@ -78,7 +56,7 @@ export default function AddActivity({ navigation }) {
       showDatePicker={showDatePicker}
       setShowDatePicker={setShowDatePicker}
       handleSave={handleSave}
-      handleCancel={handleCancel}
+      handleCancel={() => navigation.goBack()}
     />
   );
 }
