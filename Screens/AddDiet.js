@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import { useDataContext } from '../Context';
 import Form from '../Components/Form';
 import { validateAndSave } from '../Components/validationAndSave';
-import { useThemeStyles } from '../Components/useThemeStyles'; // Custom hook to get styles
+import { useThemeStyles } from '../Components/useThemeStyles';
 
 export default function AddDiet({ navigation }) {
   const { backgroundColor, textColor } = useThemeStyles();
@@ -46,8 +46,8 @@ export default function AddDiet({ navigation }) {
       setShowDatePicker={setShowDatePicker}
       handleSave={handleSave}
       handleCancel={() => navigation.goBack()}
-      backgroundColor={backgroundColor}  // Pass backgroundColor to Form
-      textColor={textColor}  // Pass textColor to Form
+      backgroundColor={backgroundColor}  
+      textColor={textColor} 
     />
   );
 }
