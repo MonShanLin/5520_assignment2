@@ -46,7 +46,10 @@ export default function AddActivity({ navigation }) {
       ],
     }));
 
-    // Go back to the previous screen
+    navigation.goBack();
+  };
+
+  const handleCancel = () => {
     navigation.goBack();
   };
 
