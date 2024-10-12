@@ -77,6 +77,7 @@ export const styles = StyleSheet.create({
 
   dateContainer: {
     borderRadius: 5,
+    
   },
 
   input: {
@@ -84,13 +85,16 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 20,
-    borderColor: '#4E4376', 
-    borderWidth: 1, 
+    borderColor: 'black', 
+    borderWidth: 1.5, 
     zIndex: 0,
   },
 
   dropdown: {
+    height: 50,
+    borderRadius: 5,
     marginBottom: 20,
+    zIndex: 0,
   },
 
   buttonContainer: {

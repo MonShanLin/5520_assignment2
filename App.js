@@ -87,13 +87,13 @@ function SettingsStack() {
 
 export default function App() {
   return (
-    
+    <ThemeProvider>
       <DataProvider>
-        <ThemeProvider>
         <NavigationContainer>
           <Tab.Navigator
             screenOptions={({ route }) => ({
               headerShown: false, // Hide header
+              headerTitleAlign: 'center',
               headerStyle: styles.headerStyle, // Styles for header
               headerTintColor: styles.headerTintColor.color, // White text in the header
               tabBarStyle: styles.headerStyle, // Styles for tab bar
@@ -120,8 +120,8 @@ export default function App() {
             <Tab.Screen name="Settings" component={SettingsStack} />
           </Tab.Navigator>
         </NavigationContainer>
-        </ThemeProvider>
       </DataProvider>
+    </ThemeProvider>
     
   );
 }
