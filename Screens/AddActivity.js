@@ -42,14 +42,17 @@ export default function AddActivity({ navigation }) {
       keyboardType: 'numeric' },
   ];
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const formData = {
       name: activityType,
       duration: `${duration} min`,
       date: date
     };
 
-    validateAndSave(formData, date, 'activities', navigation);
+    const success = await validateAndSave(formData, date, 'activities', navigation);
+    if (success) {
+      navigation.goBack(); 
+    }
   };
 
   return (

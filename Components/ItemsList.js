@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList} from 'react-native';
+import { View, Text, FlatList, Pressable} from 'react-native';
 import { useDataContext } from '../Context';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../Helpers/styles';
@@ -7,7 +7,6 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
 
 export default function ItemsList({ type }) {
-  const { entries } = useDataContext();
   const [data, setData] = useState([]);
 
   useEffect(() => {

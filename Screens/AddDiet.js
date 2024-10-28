@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
-import { useDataContext } from '../Context';
 import Form from '../Components/Form';
 import { validateAndSave } from '../Components/validationAndSave';
 import { useThemeStyles } from '../Components/useThemeStyles';
@@ -28,21 +27,17 @@ export default function AddDiet({ navigation }) {
     },
   ];
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const formData = {
       name: description,
       calories: `${calories}`,
       date: date.toISOString()
     };
 
-    writeToDB(formData, 'diet')
-      .then(() => {
-        console.log('Diet entry added!');
-        navigation.goBack();
-      })
-      .catch((error) => {
-        Alert.alert('Error', error.message);
-      });
+    const success = await validateAndSave(formData, date, 'diet', navigation); 
+    if (success) {
+      navigation.goBack(); 
+    }
   };
 
   return (

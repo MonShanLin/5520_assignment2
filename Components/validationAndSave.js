@@ -23,8 +23,7 @@ export async function validateAndSave(formData, date, collectionName, navigation
 
     // Save the form data to Firestore
     try {
-        await writeToDB(formData, collectionName);
-        navigation.goBack(); // Navigate back after successful save
+        writeToDB(formData, collectionName);
         return true;
     } catch (error) {
         Alert.alert('Error', 'Failed to save the data.');
