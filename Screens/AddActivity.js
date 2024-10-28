@@ -4,6 +4,7 @@ import Form from '../Components/Form';
 import { validateAndSave } from '../Components/validationAndSave';
 import { useThemeStyles } from '../Components/useThemeStyles';
 import { database } from '../Firebase/firebaseSetup';
+import { writeToDB } from '../Firebase/firestoreHelper';
 
 export default function AddActivity({ navigation }) {
   const { backgroundColor, textColor } = useThemeStyles();
@@ -48,8 +49,7 @@ export default function AddActivity({ navigation }) {
       date: date.toISOString()
     };
 
-    database.collection('activities')
-      .add(formData)
+    writeToDB(formData, 'activities')
       .then(() => {
         console.log('Activity added!');
         navigation.goBack();
