@@ -5,6 +5,7 @@ import { useThemeStyles } from '../Components/useThemeStyles';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
 import { Ionicons } from '@expo/vector-icons';
+import Checkbox from 'expo-checkbox';
 
 export default function EditDiet({ route, navigation }) {
   const { backgroundColor, textColor } = useThemeStyles();
@@ -13,6 +14,7 @@ export default function EditDiet({ route, navigation }) {
   const [description, setDescription] = useState('');
   const [calories, setCalories] = useState('');
   const [date, setDate] = useState(new Date());
+  const [isSpecial, setIsSpecial] = useState(false); // New checkbox state for special entry
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   // Adding delete button to header
@@ -37,6 +39,7 @@ export default function EditDiet({ route, navigation }) {
           setDescription(data.name);
           setCalories(data.calories);
           setDate(new Date(data.date));
+          setIsSpecial(data.isSpecial || false);
         } else {
           Alert.alert('Error', 'No such document found');
         }
@@ -52,6 +55,7 @@ export default function EditDiet({ route, navigation }) {
       name: description,
       calories: `${calories}`,
       date: date.toISOString(),
+      isSpecial, // Ensure isSpecial is included and properly updated
     };
 
     const docRef = doc(database, 'diet', id);
@@ -128,6 +132,17 @@ export default function EditDiet({ route, navigation }) {
         backgroundColor={backgroundColor}  
         textColor={textColor} 
       />
+                  {/* Special Entry Checkbox */}
+                  <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+        <Checkbox
+          value={isSpecial}
+          onValueChange={setIsSpecial}
+          color={isSpecial ? '#4630EB' : undefined}
+        />
+        <Text style={{ color: textColor, marginLeft: 8 }}>
+          This item is marked as special. Select the checkbox if you would like to approve it.
+        </Text>
+      </View>
     </View>
   );
 }
