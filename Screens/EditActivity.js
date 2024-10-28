@@ -1,32 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, Pressable, Text } from 'react-native';
+import { Alert, View, Pressable, Text, ActivityIndicator } from 'react-native';
 import Form from '../Components/Form';
 import { useThemeStyles } from '../Components/useThemeStyles';
-import { getDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { database } from '../Firebase/firebaseSetup';
+import { fetchFromDB, updateDB, deleteFromDB } from '../Firebase/firestoreHelper';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EditActivity({ route, navigation }) {
   const { backgroundColor, textColor } = useThemeStyles();
   const { id } = route.params;  // Passed entry ID
 
-  const [activityType, setActivityType] = useState(null);
+  const [activityType, setActivityType] = useState('');
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [loading, setLoading] = useState(true);  // Loading state for data fetching
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState([
+    { label: 'Walking', value: 'Walking' },
+    { label: 'Running', value: 'Running' },
+    { label: 'Swimming', value: 'Swimming' },
+    { label: 'Weights', value: 'Weights' },
+    { label: 'Yoga', value: 'Yoga' },
+    { label: 'Cycling', value: 'Cycling' },
+    { label: 'Hiking', value: 'Hiking' },
+  ]);
 
   useEffect(() => {
-    // Fetch the existing data from Firestore using the document ID
     const fetchEntry = async () => {
-      const docRef = doc(database, 'activities', id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
+      try {
+        const data = await fetchFromDB(id, 'activities');
         setActivityType(data.name);
         setDuration(data.duration.replace(' min', ''));
         setDate(new Date(data.date));
-      } else {
-        Alert.alert('Error', 'No such document found');
+        setLoading(false);  // Stop loading after fetching
+      } catch (error) {
+        Alert.alert('Error', 'Failed to fetch activity data.');
+        setLoading(false);  // Stop loading even in case of error
       }
     };
     fetchEntry();
@@ -39,22 +48,20 @@ export default function EditActivity({ route, navigation }) {
       date: date.toISOString(),
     };
 
-    const docRef = doc(database, 'activities', id);
     try {
-      await updateDoc(docRef, formData);
+      await updateDB(id, formData, 'activities');
       Alert.alert('Success', 'Activity updated successfully!');
-      navigation.goBack();  // Navigate back after saving
+      navigation.goBack();
     } catch (error) {
       Alert.alert('Error', 'Failed to update activity.');
     }
   };
 
   const handleDelete = async () => {
-    const docRef = doc(database, 'activities', id);
     try {
-      await deleteDoc(docRef);
+      await deleteFromDB(id, 'activities');
       Alert.alert('Success', 'Activity deleted successfully!');
-      navigation.goBack();  // Navigate back after deletion
+      navigation.goBack();
     } catch (error) {
       Alert.alert('Error', 'Failed to delete activity.');
     }
@@ -65,24 +72,28 @@ export default function EditActivity({ route, navigation }) {
       label: 'Activity',
       value: activityType,
       onChange: setActivityType,
-      dropdownOptions: [
-        { label: 'Walking', value: 'Walking' },
-        { label: 'Running', value: 'Running' },
-        { label: 'Swimming', value: 'Swimming' },
-        { label: 'Weights', value: 'Weights' },
-        { label: 'Yoga', value: 'Yoga' },
-        { label: 'Cycling', value: 'Cycling' },
-        { label: 'Hiking', value: 'Hiking' },
-      ],
+      dropdownOptions: items,
+      setOpen,
+      open,
+      setItems,
       placeholder: 'Select An Activity',
     },
     {
-      label: 'Duration (min)', 
-      value: duration, 
-      onChange: setDuration, 
-      keyboardType: 'numeric'
-    }
+      label: 'Duration (min)',
+      value: duration,
+      onChange: setDuration,
+      keyboardType: 'numeric',
+    },
   ];
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="blue" />
+        <Text style={{ color: textColor, marginTop: 10 }}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -100,8 +111,8 @@ export default function EditActivity({ route, navigation }) {
         setShowDatePicker={setShowDatePicker}
         handleSave={handleSave}
         handleCancel={() => navigation.goBack()}
-        backgroundColor={backgroundColor}  
-        textColor={textColor} 
+        backgroundColor={backgroundColor}
+        textColor={textColor}
       />
     </View>
   );
