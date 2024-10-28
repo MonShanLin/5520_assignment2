@@ -49,32 +49,33 @@ export default function ItemsList({ type }) {
       data={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-<Pressable
-  onPress={() =>
-    navigation.navigate(type === 'diet' ? 'EditDiet' : 'EditActivity', { id: item.id })
-  }
-  style={styles.itemContainer}
->
-  <Text style={styles.itemName}>{item.name}</Text>
-
-  <View style={styles.itemDetailsContainer}>
-    <View style={styles.itemInfo}>
-      {(isSpecialActivity(item) || item.isSpecial) && (
-        <Ionicons name="warning" size={20} color="#FFC107" style={styles.warningIcon} />
-      )}
-
-      <View style={styles.box}>
-        <Text style={styles.itemDetails}>{formatDate(item.date)}</Text>
-      </View>
-    </View>
-
-    <View style={styles.box}>
-      <Text style={styles.itemDetails}>
-        {type === 'diet' ? `${item.calories} cal` : item.duration}
-      </Text>
-    </View>
-  </View>
-</Pressable>
+      <Pressable
+        onPress={() => navigation.navigate(
+          type === 'diet' ? 'EditDiet' : 'EditActivity',
+          { id: item.id } 
+        )}
+        style={styles.itemContainer}
+      >
+        <Text style={styles.itemName}>{item.name}</Text>
+      
+        <View style={styles.itemDetailsContainer}>
+          <View style={styles.itemInfo}>
+            {isSpecialActivity(item) && (
+              <Ionicons name="warning" size={20} color="#FFC107" style={styles.warningIcon} />
+            )}
+      
+            <View style={styles.box}>
+              <Text style={styles.itemDetails}>{formatDate(item.date)}</Text>
+            </View>
+          </View>
+          
+          <View style={styles.box}>
+            <Text style={styles.itemDetails}>
+              {type === 'diet' ? `${item.calories} cal` : item.duration}
+            </Text>
+          </View>
+        </View>
+      </Pressable>
     )}
   />
 );
