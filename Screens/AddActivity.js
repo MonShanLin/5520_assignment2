@@ -49,9 +49,10 @@ export default function AddActivity({ navigation }) {
       date: date
     };
 
-    const success = await validateAndSave(formData, date, 'activities', navigation);
-    if (success) {
-      navigation.goBack(); 
+    const documentId = validateAndSave(formData, date, 'activities', navigation);
+    
+    if (documentId) {
+      navigation.goBack();
     }
   };
 

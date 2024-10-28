@@ -23,8 +23,8 @@ export async function validateAndSave(formData, date, collectionName, navigation
 
     // Save the form data to Firestore
     try {
-        writeToDB(formData, collectionName);
-        return true;
+      const docRef = writeToDB(formData, collectionName);
+      return docRef.id;
     } catch (error) {
         Alert.alert('Error', 'Failed to save the data.');
         console.error('Error writing to Firestore:', error);
