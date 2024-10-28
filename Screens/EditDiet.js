@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, Pressable, Text } from 'react-native';
+import { Alert, View, Pressable, Text, CheckBox } from 'react-native';
 import Form from '../Components/Form';
 import { useThemeStyles } from '../Components/useThemeStyles';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';

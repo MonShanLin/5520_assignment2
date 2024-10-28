@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, Pressable, Text } from 'react-native';
+import { Alert, View, Pressable, Text  } from 'react-native';
 import Form from '../Components/Form';
 import { useThemeStyles } from '../Components/useThemeStyles';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
 import { Ionicons } from '@expo/vector-icons';
+import Checkbox from 'expo-checkbox';
 
 export default function EditActivity({ route, navigation }) {
   const { backgroundColor, textColor } = useThemeStyles();
@@ -146,6 +147,16 @@ export default function EditActivity({ route, navigation }) {
         backgroundColor={backgroundColor}  
         textColor={textColor} 
       />
+            {/* Special Entry Checkbox */}
+            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+        <Checkbox
+          value={isSpecial}
+          onValueChange={setIsSpecial}
+        />
+        <Text style={{ color: textColor, marginLeft: 8 }}>
+          This item is marked as special. Select the checkbox if you would like to approve it.
+        </Text>
+      </View>
     </View>
   );
 }

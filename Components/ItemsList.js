@@ -10,6 +10,7 @@ export default function ItemsList({ type }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation(); 
 
+
   useEffect(() => {
     // Fetch real-time updates from Firestore based on the "type" (activities or diet)
     const unsubscribe = onSnapshot(collection(database, type), (snapshot) => {
@@ -59,7 +60,7 @@ export default function ItemsList({ type }) {
       
         <View style={styles.itemDetailsContainer}>
           <View style={styles.itemInfo}>
-            {isSpecialActivity(item) && (
+          {(isSpecialActivity(item) || item.isSpecial) && (
               <Ionicons name="warning" size={20} color="#FFC107" style={styles.warningIcon} />
             )}
       
