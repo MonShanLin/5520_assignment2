@@ -34,11 +34,12 @@ export default function AddDiet({ navigation }) {
       date: date.toISOString()
     };
 
-    const success = await validateAndSave(formData, date, 'diet', navigation); 
-    if (success) {
-      navigation.goBack(); 
-    }
-  };
+  const documentId = validateAndSave(formData, date, 'diet', navigation);
+    
+  if (documentId) {
+    navigation.goBack();
+  }
+};
 
   return (
     <Form
