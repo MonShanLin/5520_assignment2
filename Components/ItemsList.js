@@ -23,6 +23,14 @@ export default function ItemsList({ type }) {
     return () => unsubscribe();
   }, [type]);
 
+    // Function to format the date
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
+      });
+    };
+
   const isSpecialActivity = (item) => {
     if (type === 'diet') {
         // For diet, mark as special if calories exceed 800
@@ -49,7 +57,7 @@ export default function ItemsList({ type }) {
                 )}
               
             <View style={styles.box}>
-                <Text style={styles.itemDetails}>{item.date}</Text>
+                <Text style={styles.itemDetails}>{formatDate(item.date)}</Text>
               </View>
             </View>
             
