@@ -19,7 +19,7 @@ export default function SettingsScreen() {
         onPress={toggleTheme}
         style={[
           styles.button,
-          { backgroundColor: '#800080', padding: 10, borderRadius: 5 },
+          { backgroundColor: '#b56eb5', padding: 10, borderRadius: 5 },
         ]}
       >
         <Text style={[styles.buttonText, { color: textColor }]}>
