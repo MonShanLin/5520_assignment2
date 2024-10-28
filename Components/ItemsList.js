@@ -33,13 +33,13 @@ export default function ItemsList({ type }) {
       });
     };
 
-  const isSpecialActivity = (item) => {
-    if (type === 'diet') {
+    const isSpecialActivity = (item) => {
+      if (type === 'diet') {
         // For diet, mark as special if calories exceed 800
-        return parseInt(item.calories) > 800; // Convert calories to integer
+        return parseInt(item.calories) > 800;
       } else {
         // For activities, mark as special if it's "Running" or "Weights" and duration > 60 minutes
-        const duration = parseInt(item.duration); // Convert duration to integer
+        const duration = parseInt(item.duration);
         return (item.name === 'Running' || item.name === 'Weights') && duration > 60;
       }
     };
@@ -49,33 +49,32 @@ export default function ItemsList({ type }) {
       data={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-      <Pressable
-        onPress={() => navigation.navigate(
-          type === 'diet' ? 'EditDiet' : 'EditActivity',
-          { id: item.id } 
-        )}
-        style={styles.itemContainer}
-      >
-        <Text style={styles.itemName}>{item.name}</Text>
-      
-        <View style={styles.itemDetailsContainer}>
-          <View style={styles.itemInfo}>
-          {(isSpecialActivity(item) || item.isSpecial) && (
-              <Ionicons name="warning" size={20} color="#FFC107" style={styles.warningIcon} />
-            )}
-      
-            <View style={styles.box}>
-              <Text style={styles.itemDetails}>{formatDate(item.date)}</Text>
-            </View>
-          </View>
-          
-          <View style={styles.box}>
-            <Text style={styles.itemDetails}>
-              {type === 'diet' ? `${item.calories} cal` : item.duration}
-            </Text>
-          </View>
-        </View>
-      </Pressable>
+<Pressable
+  onPress={() =>
+    navigation.navigate(type === 'diet' ? 'EditDiet' : 'EditActivity', { id: item.id })
+  }
+  style={styles.itemContainer}
+>
+  <Text style={styles.itemName}>{item.name}</Text>
+
+  <View style={styles.itemDetailsContainer}>
+    <View style={styles.itemInfo}>
+      {(isSpecialActivity(item) || item.isSpecial) && (
+        <Ionicons name="warning" size={20} color="#FFC107" style={styles.warningIcon} />
+      )}
+
+      <View style={styles.box}>
+        <Text style={styles.itemDetails}>{formatDate(item.date)}</Text>
+      </View>
+    </View>
+
+    <View style={styles.box}>
+      <Text style={styles.itemDetails}>
+        {type === 'diet' ? `${item.calories} cal` : item.duration}
+      </Text>
+    </View>
+  </View>
+</Pressable>
     )}
   />
 );

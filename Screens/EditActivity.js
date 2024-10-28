@@ -65,14 +65,14 @@ export default function EditActivity({ route, navigation }) {
       name: activityType,
       duration: `${duration}`,
       date: date.toISOString(),
-      isSpecial, // Include the special status
+      isSpecial, // Ensure isSpecial is included and properly updated
     };
 
     const docRef = doc(database, 'activities', id);
     try {
-      updateDoc(docRef, formData);
+      updateDoc(docRef, formData); // Update Firestore
       Alert.alert('Success', 'Activity updated successfully!', [
-        { text: 'OK', onPress: () => navigation.goBack() }, // Navigate back after alert
+        { text: 'OK', onPress: () => navigation.goBack() },
       ]);
     } catch (error) {
       Alert.alert('Error', 'Failed to update activity.');
@@ -148,10 +148,11 @@ export default function EditActivity({ route, navigation }) {
         textColor={textColor} 
       />
             {/* Special Entry Checkbox */}
-            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
         <Checkbox
           value={isSpecial}
           onValueChange={setIsSpecial}
+          color={isSpecial ? '#4630EB' : undefined}
         />
         <Text style={{ color: textColor, marginLeft: 8 }}>
           This item is marked as special. Select the checkbox if you would like to approve it.

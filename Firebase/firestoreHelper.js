@@ -63,3 +63,13 @@ export async function fetchFromDB(id, collectionName) {
         throw err;
     }
 }
+
+export async function cancelSpecial(docId, collectionName) {
+    try {
+      const docRef = doc(database, collectionName, docId);
+      await updateDoc(docRef, { isSpecial: false });
+      console.log(`Document with ID: ${docId} has been unmarked as special.`);
+    } catch (e) {
+      console.error("Error updating document: ", e);
+    }
+  }
