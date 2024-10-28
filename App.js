@@ -43,7 +43,7 @@ function ActivitiesStack() {
       <Stack.Screen
         name="EditActivity"
         component={EditActivity} 
-        options={{ title: 'Edit Activity' }}
+        options={{ title: 'Edit' }}
       /> 
     </Stack.Navigator>
   );

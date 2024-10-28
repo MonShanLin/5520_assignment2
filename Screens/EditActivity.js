@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, Pressable, Text, ActivityIndicator } from 'react-native';
+import { Alert, View, Pressable, Text } from 'react-native';
 import Form from '../Components/Form';
 import { useThemeStyles } from '../Components/useThemeStyles';
-import { fetchFromDB, updateDB, deleteFromDB } from '../Firebase/firestoreHelper';
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { database } from '../Firebase/firebaseSetup';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EditActivity({ route, navigation }) {
@@ -13,8 +14,8 @@ export default function EditActivity({ route, navigation }) {
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [loading, setLoading] = useState(true);  // Loading state for data fetching
   const [open, setOpen] = useState(false);
+  const [isSpecial, setIsSpecial] = useState(false); // New checkbox state for special entry
   const [items, setItems] = useState([
     { label: 'Walking', value: 'Walking' },
     { label: 'Running', value: 'Running' },
@@ -25,17 +26,34 @@ export default function EditActivity({ route, navigation }) {
     { label: 'Hiking', value: 'Hiking' },
   ]);
 
+    // Adding delete button to header
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+          headerRight: () => (
+            <Pressable onPress={handleDelete} style={{ marginRight: 15 }}>
+              <Ionicons name="trash" size={30} color="red" />
+            </Pressable>
+          ),
+        });
+      }, [navigation]);
+
+      
   useEffect(() => {
+    // Fetch the existing data from Firestore using the document ID
     const fetchEntry = async () => {
       try {
-        const data = await fetchFromDB(id, 'activities');
-        setActivityType(data.name);
-        setDuration(data.duration.replace(' min', ''));
-        setDate(new Date(data.date));
-        setLoading(false);  // Stop loading after fetching
+        const docRef = doc(database, 'activities', id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setActivityType(data.name);
+          setDuration(data.duration.replace(' min', ''));
+          setDate(new Date(data.date));
+          setIsSpecial(data.isSpecial || false); // Fetch the special status if available
+        } else {
+          Alert.alert('Error', 'No such document found');
+        }
       } catch (error) {
-        Alert.alert('Error', 'Failed to fetch activity data.');
-        setLoading(false);  // Stop loading even in case of error
       }
     };
     fetchEntry();
@@ -46,22 +64,24 @@ export default function EditActivity({ route, navigation }) {
       name: activityType,
       duration: `${duration} min`,
       date: date.toISOString(),
+      isSpecial, // Include the special status
     };
 
+    const docRef = doc(database, 'activities', id);
     try {
-      await updateDB(id, formData, 'activities');
-      Alert.alert('Success', 'Activity updated successfully!');
-      navigation.goBack();
+      updateDoc(docRef, formData);
+      navigation.goBack(); 
     } catch (error) {
       Alert.alert('Error', 'Failed to update activity.');
     }
   };
 
   const handleDelete = async () => {
+    const docRef = doc(database, 'activities', id);
     try {
-      await deleteFromDB(id, 'activities');
+      await deleteDoc(docRef);
       Alert.alert('Success', 'Activity deleted successfully!');
-      navigation.goBack();
+      navigation.goBack();  // Navigate back after deletion
     } catch (error) {
       Alert.alert('Error', 'Failed to delete activity.');
     }
@@ -78,22 +98,13 @@ export default function EditActivity({ route, navigation }) {
       setItems,
       placeholder: 'Select An Activity',
     },
-    {
-      label: 'Duration (min)',
-      value: duration,
-      onChange: setDuration,
-      keyboardType: 'numeric',
+    { 
+      label: 'Duration (min)', 
+      value: duration, 
+      onChange: setDuration, 
+      keyboardType: 'numeric' 
     },
   ];
-
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="blue" />
-        <Text style={{ color: textColor, marginTop: 10 }}>Loading...</Text>
-      </View>
-    );
-  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -111,8 +122,8 @@ export default function EditActivity({ route, navigation }) {
         setShowDatePicker={setShowDatePicker}
         handleSave={handleSave}
         handleCancel={() => navigation.goBack()}
-        backgroundColor={backgroundColor}
-        textColor={textColor}
+        backgroundColor={backgroundColor}  
+        textColor={textColor} 
       />
     </View>
   );

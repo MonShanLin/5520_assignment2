@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Pressable} from 'react-native';
-import { useDataContext } from '../Context';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../Helpers/styles';
 import { collection, onSnapshot } from 'firebase/firestore';
@@ -49,7 +48,7 @@ export default function ItemsList({ type }) {
       data={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <Pressable
+      <Pressable
         onPress={() => navigation.navigate(
           type === 'diet' ? 'EditDiet' : 'EditActivity',
           { id: item.id } 
@@ -57,13 +56,13 @@ export default function ItemsList({ type }) {
         style={styles.itemContainer}
       >
         <Text style={styles.itemName}>{item.name}</Text>
-
+      
         <View style={styles.itemDetailsContainer}>
           <View style={styles.itemInfo}>
             {isSpecialActivity(item) && (
               <Ionicons name="warning" size={20} color="#FFC107" style={styles.warningIcon} />
             )}
-
+      
             <View style={styles.box}>
               <Text style={styles.itemDetails}>{formatDate(item.date)}</Text>
             </View>
