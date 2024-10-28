@@ -47,7 +47,7 @@ export default function EditActivity({ route, navigation }) {
         if (docSnap.exists()) {
           const data = docSnap.data();
           setActivityType(data.name);
-          setDuration(data.duration.replace(' min', ''));
+          setDuration(data.duration);
           setDate(new Date(data.date));
           setIsSpecial(data.isSpecial || false); // Fetch the special status if available
         } else {
@@ -62,7 +62,7 @@ export default function EditActivity({ route, navigation }) {
   const handleSave = async () => {
     const formData = {
       name: activityType,
-      duration: `${duration} min`,
+      duration: `${duration}`,
       date: date.toISOString(),
       isSpecial, // Include the special status
     };
@@ -79,9 +79,9 @@ export default function EditActivity({ route, navigation }) {
   const handleDelete = async () => {
     const docRef = doc(database, 'activities', id);
     try {
-      await deleteDoc(docRef);
+      deleteDoc(docRef);
       Alert.alert('Success', 'Activity deleted successfully!');
-      navigation.goBack();  // Navigate back after deletion
+      navigation.goBack(); 
     } catch (error) {
       Alert.alert('Error', 'Failed to delete activity.');
     }
@@ -100,7 +100,7 @@ export default function EditActivity({ route, navigation }) {
     },
     { 
       label: 'Duration (min)', 
-      value: duration, 
+      value: `${duration}`,
       onChange: setDuration, 
       keyboardType: 'numeric' 
     },
