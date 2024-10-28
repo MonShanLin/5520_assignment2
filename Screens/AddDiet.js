@@ -4,11 +4,11 @@ import { useDataContext } from '../Context';
 import Form from '../Components/Form';
 import { validateAndSave } from '../Components/validationAndSave';
 import { useThemeStyles } from '../Components/useThemeStyles';
+import { writeToDB } from '../Firebase/firestoreHelper';
 
 export default function AddDiet({ navigation }) {
   const { backgroundColor, textColor } = useThemeStyles();
 
-  const { entries, setEntries } = useDataContext();
   const [description, setDescription] = useState('');
   const [calories, setCalories] = useState('');
   const [date, setDate] = useState(new Date());
@@ -32,9 +32,17 @@ export default function AddDiet({ navigation }) {
     const formData = {
       name: description,
       calories: `${calories}`,
+      date: date.toISOString()
     };
 
-    validateAndSave(formData, date, setEntries, 'diet', navigation);
+    writeToDB(formData, 'diet')
+      .then(() => {
+        console.log('Diet entry added!');
+        navigation.goBack();
+      })
+      .catch((error) => {
+        Alert.alert('Error', error.message);
+      });
   };
 
   return (

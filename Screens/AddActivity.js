@@ -46,17 +46,10 @@ export default function AddActivity({ navigation }) {
     const formData = {
       name: activityType,
       duration: `${duration} min`,
-      date: date.toISOString()
+      date: date
     };
 
-    writeToDB(formData, 'activities')
-      .then(() => {
-        console.log('Activity added!');
-        navigation.goBack();
-      })
-      .catch((error) => {
-        Alert.alert('Error', error.message);
-      });
+    validateAndSave(formData, date, 'activities', navigation);
   };
 
   return (
