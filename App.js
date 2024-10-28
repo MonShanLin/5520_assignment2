@@ -10,6 +10,8 @@ import ActivitiesScreen from './Screens/Activities';
 import SettingsScreen from './Screens/Settings';
 import AddActivity from './Screens/AddActivity';
 import AddDiet from './Screens/AddDiet';
+import EditActivity from './Screens/EditActivity';
+import EditDiet from './Screens/EditDiet'; 
 import { ThemeProvider } from './Components/ThemeContext';
 import { DataProvider } from './Context';
 import { styles } from './Helpers/styles';
@@ -38,6 +40,11 @@ function ActivitiesStack() {
         component={AddActivity}
         options={{ title: 'Add An Activity' }}
       />
+      <Stack.Screen
+        name="EditActivity"
+        component={EditActivity} 
+        options={{ title: 'Edit Activity' }}
+      /> 
     </Stack.Navigator>
   );
 }
@@ -61,6 +68,11 @@ function DietStack() {
         name="AddDiet"
         component={AddDiet}
         options={{ title: 'Add A Diet Entry' }}
+      />
+      <Stack.Screen
+        name="EditDiet"
+        component={EditDiet} 
+        options={{ title: 'Edit Diet Entry' }}
       />
     </Stack.Navigator>
   );
