@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList} from 'react-native';
 import { useDataContext } from '../Context';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../Helpers/styles';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { database } from '../Firebase/firebaseSetup';
 
 export default function ItemsList({ type }) {
   const { entries } = useDataContext();
-  const data = type === 'diet' ? entries.diet : entries.activities;
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Fetch real-time updates from Firestore based on the "type" (activities or diet)
+    const unsubscribe = onSnapshot(collection(database, type), (snapshot) => {
+      const dataList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setData(dataList);
+    });
+
+    // Clean up the Firestore listener on component unmount
+    return () => unsubscribe();
+  }, [type]);
 
   const isSpecialActivity = (item) => {
     if (type === 'diet') {
