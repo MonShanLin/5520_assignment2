@@ -30,8 +30,8 @@ export default function EditActivity({ route, navigation }) {
     React.useLayoutEffect(() => {
         navigation.setOptions({
           headerRight: () => (
-            <Pressable onPress={handleDelete} style={{ marginRight: 15 }}>
-              <Ionicons name="trash" size={30} color="red" />
+            <Pressable onPress={handleDeleteConfirm} style={{ marginRight: 15 }}>
+              <Ionicons name="trash" size={20} color="white" />
             </Pressable>
           ),
         });
@@ -70,7 +70,9 @@ export default function EditActivity({ route, navigation }) {
     const docRef = doc(database, 'activities', id);
     try {
       updateDoc(docRef, formData);
-      navigation.goBack(); 
+      Alert.alert('Success', 'Activity updated successfully!', [
+        { text: 'OK', onPress: () => navigation.goBack() }, // Navigate back after alert
+      ]);
     } catch (error) {
       Alert.alert('Error', 'Failed to update activity.');
     }
@@ -86,6 +88,29 @@ export default function EditActivity({ route, navigation }) {
       Alert.alert('Error', 'Failed to delete activity.');
     }
   };
+
+  const handleSaveConfirm = () => {
+    Alert.alert(
+      'Important',
+      'Are you sure you want to save these changes?',
+      [
+        { text: 'No', style: 'cancel' },
+        { text: 'Yes', onPress: handleSave },
+      ],
+    );
+  };
+
+  const handleDeleteConfirm = () => {
+    Alert.alert(
+      'Delete',
+      'Are you sure you want to delete this item?',
+      [
+        { text: 'No', style: 'cancel' },
+        { text: 'Yes', onPress: handleDelete },
+      ],
+    );
+  };
+
 
   const formFields = [
     {
@@ -108,10 +133,6 @@ export default function EditActivity({ route, navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Trash Icon for Deleting */}
-      <Pressable onPress={handleDelete} style={{ position: 'absolute', right: 20, top: 40 }}>
-        <Ionicons name="trash" size={30} color="red" />
-      </Pressable>
 
       {/* Edit Form */}
       <Form
@@ -120,7 +141,7 @@ export default function EditActivity({ route, navigation }) {
         setDate={setDate}
         showDatePicker={showDatePicker}
         setShowDatePicker={setShowDatePicker}
-        handleSave={handleSave}
+        handleSave={handleSaveConfirm} 
         handleCancel={() => navigation.goBack()}
         backgroundColor={backgroundColor}  
         textColor={textColor} 
