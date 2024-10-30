@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, Pressable, Text } from 'react-native';
 import { useTheme } from '../Components/ThemeContext';
 import { styles } from '../Helpers/styles';
 import { useThemeStyles } from '../Components/useThemeStyles';
@@ -15,14 +15,17 @@ export default function SettingsScreen() {
         { backgroundColor, justifyContent: 'center', alignItems: 'center' },
       ]}
     >
-      <TouchableOpacity
+      <Pressable
         onPress={toggleTheme}
-        style={[styles.button, { backgroundColor: '#800080' }]}
+        style={[
+          styles.button,
+          { backgroundColor: '#b56eb5', padding: 10, borderRadius: 5 },
+        ]}
       >
-        <Text style={[styles.buttonText, { color: backgroundColor }]}>
+        <Text style={[styles.buttonText, { color: textColor }]}>
           Toggle Theme
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }

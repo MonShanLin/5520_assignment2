@@ -1,22 +1,38 @@
 import React from 'react';
-import { View, TouchableOpacity, Button } from 'react-native';
+import { View, Pressable, Text } from 'react-native';
 import ItemsList from '../Components/ItemsList';
 import { styles } from '../Helpers/styles';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons'; 
 
 export default function ListScreen({ type, addScreenName, navigation, backgroundColor,textColor, }) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity style={{ marginRight: 15 }}>
-          <Button
-            onPress={() => navigation.navigate(addScreenName)} // Navigate to the appropriate screen
-            title="Add" // Text for the button
-            color="black" // Button text color
-          />
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', marginRight: 15 }}>
+          <Pressable 
+            onPress={() => navigation.navigate(addScreenName)} 
+            style={{ padding: 10 }}
+          >
+            <FontAwesome5 name="plus" size={24} color="white" />
+          </Pressable>
+
+          <Pressable 
+            onPress={() => navigation.navigate(addScreenName)} 
+            style={{ marginRight: 15, padding: 10 }}
+          >
+            {type === 'diet' ? (
+              <FontAwesome5 name="utensils" size={24} color="white" />
+            ) : (
+              <FontAwesome5 name="running" size={24} color="white" />
+            )}
+          </Pressable>
+
+          
+
+        </View>
       ),
     });
-  }, [navigation]);
+  }, [navigation, type]);
 
   return (
     <View style={[styles.screenContainer, { backgroundColor }]}>

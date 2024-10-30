@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
-import { useDataContext } from '../Context'; // Use context to update data
+import { Pressable, Text, Alert } from 'react-native';
 import Form from '../Components/Form';
 import { validateAndSave } from '../Components/validationAndSave';
 import { useThemeStyles } from '../Components/useThemeStyles';
+import { database } from '../Firebase/firebaseSetup';
+import { writeToDB } from '../Firebase/firestoreHelper';
 
 export default function AddActivity({ navigation }) {
   const { backgroundColor, textColor } = useThemeStyles();
 
-  const { entries, setEntries } = useDataContext(); // Context to update the activities
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(new Date());
@@ -42,13 +42,18 @@ export default function AddActivity({ navigation }) {
       keyboardType: 'numeric' },
   ];
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const formData = {
       name: activityType,
       duration: `${duration} min`,
+      date: date
     };
 
-    validateAndSave(formData, date, setEntries, 'activities', navigation);
+    const documentId = validateAndSave(formData, date, 'activities', navigation);
+    
+    if (documentId) {
+      navigation.goBack();
+    }
   };
 
   return (
